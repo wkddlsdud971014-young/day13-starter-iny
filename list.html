@@ -14,7 +14,7 @@
     color: #1a1815;
     min-height: 100vh;
   }
-  .container { max-width: 1100px; margin: 0 auto; }
+  .container { max-width: 800px; margin: 0 auto; }
 
   .header {
     margin-bottom: 50px;
@@ -55,91 +55,103 @@
   }
   .cta:hover { opacity: 0.7; }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 28px;
-  }
-
-  .card {
+  .list-container {
     background: white;
     border-radius: 10px;
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border: 1px solid #f0ede8;
     overflow: hidden;
-    position: relative;
-    animation: fadeInCard 0.6s ease-out forwards;
+  }
+
+  .list-header {
+    display: grid;
+    grid-template-columns: 80px 120px 140px 1fr 100px;
+    gap: 20px;
+    padding: 20px 24px;
+    background: #faf9f7;
+    border-bottom: 1px solid #e8e3de;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: #9b8f85;
+  }
+
+  .list-item {
+    display: grid;
+    grid-template-columns: 80px 120px 140px 1fr 100px;
+    gap: 20px;
+    padding: 18px 24px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0ede8;
+    animation: fadeInList 0.6s ease-out forwards;
     opacity: 0;
   }
-  .card:nth-child(1) { animation-delay: 0.1s; }
-  .card:nth-child(2) { animation-delay: 0.15s; }
-  .card:nth-child(3) { animation-delay: 0.2s; }
-  .card:nth-child(n+4) { animation-delay: 0.25s; }
+  .list-item:nth-child(1) { animation-delay: 0.1s; }
+  .list-item:nth-child(2) { animation-delay: 0.15s; }
+  .list-item:nth-child(3) { animation-delay: 0.2s; }
+  .list-item:nth-child(n+4) { animation-delay: 0.25s; }
 
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    border-color: #e0dcd7;
+  .list-item:hover {
+    background: #faf9f7;
+    transform: translateX(4px);
+  }
+  .list-item:last-child {
+    border-bottom: none;
   }
 
-  .drink-visual {
-    font-size: 48px;
-    height: 80px;
+  .item-drink {
+    font-size: 32px;
+    text-align: center;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, #f5f0eb 0%, #faf9f7 100%);
-    border-radius: 8px;
   }
 
-  .card-tag {
+  .item-tag {
     display: inline-block;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 4px;
-    margin-bottom: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.7px;
+    letter-spacing: 0.5px;
+    color: white;
   }
-  .tag-americano { background: #e8dcc8; color: #8b5a2b; }
-  .tag-latte { background: #e0d4c4; color: #7a5c4d; }
-  .tag-matcha { background: #d4e8d0; color: #5a8050; }
-  .tag-cocoa { background: #e0d0e8; color: #6b4a8b; }
-  .tag-milk { background: #d4e0f0; color: #4a6b8b; }
+  .tag-americano { background: #8b5a2b; }
+  .tag-latte { background: #7a5c4d; }
+  .tag-matcha { background: #5a8050; }
+  .tag-cocoa { background: #6b4a8b; }
+  .tag-milk { background: #4a6b8b; }
 
-  .card-id {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
+  .item-customer {
+    font-size: 14px;
+    font-weight: 500;
     color: #2b2520;
   }
-  .card-buyer {
-    font-size: 13px;
+
+  .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .item-product {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2b2520;
+  }
+  .item-time {
+    font-size: 12px;
     color: #9b8f85;
-    margin-bottom: 14px;
-    font-weight: 400;
   }
 
-  .card-divider {
-    height: 1px;
-    background: #f0ede8;
-    margin: 14px 0;
-  }
-
-  .card-price {
-    font-size: 18px;
+  .item-price {
+    font-size: 16px;
     font-weight: 700;
     color: #c9a875;
-    margin-bottom: 8px;
-  }
-  .card-time {
-    font-size: 12px;
-    color: #b8ada3;
-    font-weight: 400;
+    text-align: right;
   }
 
   .empty {
@@ -149,18 +161,39 @@
     font-size: 15px;
   }
 
+  @media (max-width: 768px) {
+    .list-header {
+      grid-template-columns: 60px 1fr 100px;
+      font-size: 10px;
+    }
+    .list-item {
+      grid-template-columns: 60px 1fr 100px;
+      gap: 12px;
+      padding: 14px 16px;
+    }
+    .item-drink {
+      font-size: 24px;
+    }
+    .item-product {
+      font-size: 13px;
+    }
+    .item-time {
+      font-size: 11px;
+    }
+  }
+
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
-  @keyframes fadeInCard {
+  @keyframes fadeInList {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateX(-10px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
   }
 </style>
@@ -177,7 +210,7 @@
       <a href="index.html" class="cta">+ New Order</a>
     </div>
 
-    <div class="grid" id="grid"></div>
+    <div id="list-container"></div>
     <div class="empty" id="empty" style="display: none;">No orders yet</div>
   </div>
 
@@ -204,23 +237,37 @@ async function load() {
     return;
   }
 
-  const html = rows.map(r => {
+  let html = `
+    <div class="list-header">
+      <div></div>
+      <div>Menu</div>
+      <div>Customer</div>
+      <div>Time</div>
+      <div>Total</div>
+    </div>
+  `;
+
+  html += rows.map(r => {
     const tag = PRODUCT_TAGS[r.product] || { class: "tag-americano", label: r.product, emoji: "☕" };
     const date = new Date(r.purchased_at);
     const time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
     return `
-      <div class="card" onclick="location.href='detail.html?id=${r.id}'">
-        <div class="drink-visual">${tag.emoji}</div>
-        <div class="card-tag ${tag.class}">${tag.label}</div>
-        <div class="card-id">#${r.id}</div>
-        <div class="card-buyer">${r.buyer_name}</div>
-        <div class="card-divider"></div>
-        <div class="card-price">₩${r.total_price.toLocaleString()}</div>
-        <div class="card-time">${time}</div>
+      <div class="list-item" onclick="location.href='detail.html?id=${r.id}'">
+        <div class="item-drink">${tag.emoji}</div>
+        <div>
+          <div class="item-tag ${tag.class}">${tag.label}</div>
+        </div>
+        <div class="item-customer">${r.buyer_name}</div>
+        <div class="item-info">
+          <div style="font-size: 12px; color: #9b8f85;">ID #${r.id}</div>
+          <div class="item-time">${time}</div>
+        </div>
+        <div class="item-price">₩${r.total_price.toLocaleString()}</div>
       </div>
     `;
   }).join('');
-  document.getElementById('grid').innerHTML = html;
+
+  document.getElementById('list-container').innerHTML = `<div class="list-container">${html}</div>`;
 }
 load();
 </script>
