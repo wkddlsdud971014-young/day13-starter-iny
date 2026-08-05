@@ -257,7 +257,7 @@ async function load() {
     return `
       <div class="list-item" onclick="location.href='detail.html?id=${r.id}'">
         <div style="font-size: 13px; font-weight: 600; color: #2b2520;">
-          #${r.id}
+          ${r.id}
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
           <div class="item-drink" style="margin: 0; font-size: 28px;">${tag.emoji}</div>
@@ -268,7 +268,7 @@ async function load() {
         </div>
         <div class="item-customer">${r.buyer_name}</div>
         <div class="item-time">${fullDateTime}</div>
-        <div style="text-align: center; font-size: 14px; font-weight: 500; color: #2b2520;">${r.quantity}x</div>
+        <div style="text-align: center; font-size: 14px; font-weight: 500; color: #2b2520;">${r.quantity}잔</div>
         <div class="item-price">₩${r.total_price.toLocaleString()}</div>
       </div>
     `;
