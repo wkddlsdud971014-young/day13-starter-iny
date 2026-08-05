@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커피 주문 등록 - Day13</title>
+<style>
+  :root {
+    --ink: #183027;
+    --muted: #64736c;
+    --paper: #f7f5ed;
+    --panel: #fffdf6;
+    --line: #d7dbcf;
+    --green: #257357;
+    --green-soft: #dff0e7;
+    --orange: #dd7b35;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Apple SD Gothic Neo", Pretendard, sans-serif; color: var(--ink); background: var(--paper); max-width: 480px; margin: 40px auto; padding: 0 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p.lead { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  label { display: block; margin: 14px 0 4px; font-weight: 700; font-size: 14px; }
+  input, select { width: 100%; padding: 10px 12px; border: 1px solid #bfc9bf; border-radius: 8px; font-size: 15px; background: #fff; color: var(--ink); font-family: inherit; }
+  input:focus, select:focus { outline: 3px solid var(--green-soft); border-color: var(--green); }
+  button { margin-top: 18px; width: 100%; padding: 12px 22px; background: var(--orange); color: #fff; border: 0; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  button:disabled { opacity: .55; cursor: wait; }
+  .msg { margin-top: 14px; font-size: 14px; display: none; padding: 10px 12px; border-radius: 8px; }
+  .msg.ok { display: block; background: var(--green-soft); color: var(--green); }
+  .msg.err { display: block; background: #fbeae2; color: #b23c1a; }
+  a { color: var(--green); }
+</style>
+</head>
+<body>
+  <h1>커피 주문 등록</h1>
+  <p class="lead">주문 1건을 등록하면 판매 표에 행으로 쌓입니다. <a href="list.html">판매 현황 보기</a></p>
+  <div class="card">
+    <form id="order-form">
+      <label for="buyer_name">구매자 이름</label>
+      <input id="buyer_name" name="buyer_name" required placeholder="예: 김하늘">
+
+      <label for="product">메뉴</label>
+      <select id="product" name="product" required>
+        <option value="아메리카노">아메리카노 (3,000원)</option>
+        <option value="카페라떼">카페라떼 (4,000원)</option>
+        <option value="율무차">율무차 (3,500원)</option>
+        <option value="코코아">코코아 (4,000원)</option>
+        <option value="우유">우유 (2,500원)</option>
+      </select>
+
+      <label for="quantity">수량</label>
+      <input id="quantity" name="quantity" type="number" min="1" value="1" required>
+
+      <button id="btn" type="submit">주문 등록</button>
+    </form>
+    <div id="msg" class="msg"></div>
+  </div>
+
+<script>
+document.getElementById('order-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btn');
+  const msg = document.getElementById('msg');
+  btn.disabled = true;
+  msg.className = 'msg';
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        buyer_name: document.getElementById('buyer_name').value,
+        product: document.getElementById('product').value,
+        quantity: document.getElementById('quantity').value,
+      }),
+    });
+    if (res.ok) {
+      msg.textContent = '주문이 등록됐습니다 - 판매 현황에서 확인해 보세요';
+      msg.className = 'msg ok';
+      e.target.reset();
+    } else {
+      const body = await res.json().catch(() => ({}));
+      msg.textContent = '등록에 실패했습니다: ' + (body.error || res.status);
+      msg.className = 'msg err';
+    }
+  } catch (err) {
+    msg.textContent = '연결에 실패했습니다: ' + err.message;
+    msg.className = 'msg err';
+  }
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>

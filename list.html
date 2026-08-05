@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>판매 현황</title>
+<style>
+  body { font-family: "Apple SD Gothic Neo", sans-serif; max-width: 760px; margin: 40px auto; padding: 0 16px; color: #1b1d21; }
+  h1 { font-size: 24px; }
+  .meta { color: #666; font-size: 14px; margin-bottom: 16px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; font-size: 14px; text-align: left; }
+  th { background: #f4f2ee; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  a { color: #0d6d64; }
+</style>
+</head>
+<body>
+  <h1>커피 자판기 판매 현황</h1>
+  <p class="meta">최신 구매가 맨 위에 옵니다. <span id="count"></span> · <a href="index.html">주문 등록하기</a></p>
+  <table>
+    <thead><tr><th>#</th><th>구매자</th><th>상품</th><th>수량</th><th>금액</th><th>구매 시각</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+<script>
+async function load() {
+  const res = await fetch('/api/list');
+  if (!res.ok) {
+    document.getElementById('count').textContent = '불러오기에 실패했습니다';
+    return;
+  }
+  const rows = await res.json();
+  document.getElementById('count').textContent = '총 ' + rows.length + '건';
+  document.getElementById('rows').innerHTML = rows.map(r =>
+    `<tr>
+       <td>${r.id}</td>
+       <td>${r.buyer_name}</td>
+       <td>${r.product}</td>
+       <td class="num">${r.quantity}</td>
+       <td class="num">${r.total_price.toLocaleString('ko-KR')}원</td>
+       <td>${new Date(r.purchased_at).toLocaleString('ko-KR')}</td>
+     </tr>`).join('');
+}
+load();
+</script>
+</body>
+</html>
