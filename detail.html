@@ -1,131 +1,229 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>주문 상세</title>
+<title>Order Receipt</title>
 <style>
   * { box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Courier New', monospace;
     margin: 0;
-    padding: 60px 20px;
-    background: #fafaf8;
+    padding: 40px 20px;
+    background: #f5f5f0;
     color: #1b1d21;
   }
-  .container { max-width: 600px; margin: 0 auto; }
+  .container {
+    max-width: 380px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px 32px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  .receipt-top {
+    border-bottom: 2px dashed #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 
   .back-link {
-    display: inline-block;
-    font-size: 14px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 12px;
     color: #2563eb;
     text-decoration: none;
-    margin-bottom: 40px;
     font-weight: 600;
   }
   .back-link:hover { text-decoration: underline; }
 
   h1 {
-    font-size: 48px;
+    font-size: 18px;
     font-weight: 700;
-    margin: 0 0 48px 0;
-    letter-spacing: -1px;
+    margin: 0 0 4px 0;
+    letter-spacing: 1px;
+  }
+  .order-id {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 8px 0;
   }
 
-  .info-section {
-    background: white;
-    border-radius: 8px;
-    padding: 32px;
-    border: 1px solid #f0f0f0;
+  .divider {
+    height: 1px;
+    background: #ddd;
+    margin: 16px 0;
+  }
+  .divider-dashed {
+    border-top: 1px dashed #ddd;
+    margin: 16px 0;
   }
 
-  .info-row {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .info-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 12px;
   }
 
-  .label {
-    font-size: 12px;
+  .item-label {
+    font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #999;
+    min-width: 80px;
   }
 
-  .value {
-    font-size: 18px;
+  .item-value {
+    font-size: 13px;
     font-weight: 600;
     color: #1b1d21;
+    text-align: right;
+    flex: 1;
   }
 
-  .value.price {
-    color: #d2691e;
-    font-size: 28px;
+  .item-value.product {
+    text-align: left;
+    flex: 1;
   }
 
   .tag {
     display: inline-block;
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 3px 8px;
+    border-radius: 2px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     color: white;
+    margin-bottom: 8px;
   }
   .tag-americano { background: #d2691e; }
   .tag-latte { background: #8b6f47; }
   .tag-matcha { background: #7cb342; }
   .tag-cocoa { background: #9575cd; }
   .tag-milk { background: #64b5f6; }
+
+  .total-section {
+    margin: 20px 0;
+  }
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 2px solid #d2691e;
+  }
+  .total-price .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #999;
+  }
+  .total-price .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #d2691e;
+  }
+
+  .receipt-bottom {
+    border-top: 2px dashed #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .timestamp {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 16px;
+  }
+
+  .barcode {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin: 12px 0;
+    font-weight: 700;
+    color: #1b1d21;
+  }
+
+  .footer {
+    font-size: 10px;
+    color: #999;
+    margin-top: 12px;
+  }
+
+  .cut-line {
+    text-align: center;
+    font-size: 10px;
+    color: #ddd;
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body>
+  <a href="list.html" class="back-link">← Back</a>
+
   <div class="container">
-    <a href="list.html" class="back-link">← 목록으로</a>
-    <h1 id="title">주문 #<span id="id"></span></h1>
+    <div class="receipt-top">
+      <h1>ORDER RECEIPT</h1>
+      <p class="order-id" id="order-id">Order #<span id="id"></span></p>
+    </div>
 
-    <div class="info-section">
-      <div class="info-row">
-        <div class="label">상품</div>
-        <div>
-          <span class="tag" id="tag"></span>
-          <div class="value" id="product" style="margin-top: 8px;"></div>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="label">구매자</div>
-        <div class="value" id="buyer_name"></div>
-      </div>
-
-      <div class="info-row">
-        <div class="label">수량</div>
-        <div class="value" id="quantity"></div>
-      </div>
-
-      <div class="info-row">
-        <div class="label">단가</div>
-        <div class="value" id="price_per_unit"></div>
-      </div>
-
-      <div class="info-row">
-        <div class="label">총액</div>
-        <div class="value price" id="total_price"></div>
-      </div>
-
-      <div class="info-row">
-        <div class="label">구매 시각</div>
-        <div class="value" id="purchased_at"></div>
+    <div class="item-row">
+      <span class="item-label">Product</span>
+      <div class="item-value product">
+        <div id="tag"></div>
+        <div id="product"></div>
       </div>
     </div>
+
+    <div class="divider"></div>
+
+    <div class="item-row">
+      <span class="item-label">Customer</span>
+      <span class="item-value" id="buyer_name"></span>
+    </div>
+
+    <div class="item-row">
+      <span class="item-label">Quantity</span>
+      <span class="item-value" id="quantity"></span>
+    </div>
+
+    <div class="item-row">
+      <span class="item-label">Unit Price</span>
+      <span class="item-value" id="price_per_unit"></span>
+    </div>
+
+    <div class="divider-dashed"></div>
+
+    <div class="total-price">
+      <span class="label">Total</span>
+      <span class="value" id="total_price"></span>
+    </div>
+
+    <div class="receipt-bottom">
+      <div class="timestamp" id="purchased_at"></div>
+      <div class="barcode">|||||||||||||||</div>
+      <div class="footer">www.coffee.com</div>
+    </div>
+
+    <div class="cut-line">✂ - - - - - - - - - -</div>
   </div>
 
 <script>
@@ -142,13 +240,13 @@ async function load() {
   const id = params.get('id');
 
   if (!id) {
-    document.getElementById('title').textContent = '주문 번호가 없습니다';
+    document.querySelector('h1').textContent = 'Order not found';
     return;
   }
 
   const res = await fetch('/api/list?id=' + id);
   if (!res.ok) {
-    document.getElementById('title').textContent = '조회에 실패했습니다';
+    document.querySelector('h1').textContent = 'Failed to load';
     return;
   }
 
@@ -158,10 +256,14 @@ async function load() {
   document.getElementById('id').textContent = data.id;
   document.getElementById('product').textContent = data.product;
   document.getElementById('buyer_name').textContent = data.buyer_name;
-  document.getElementById('quantity').textContent = data.quantity + '개';
-  document.getElementById('price_per_unit').textContent = data.price_per_unit.toLocaleString('ko-KR') + '원';
-  document.getElementById('total_price').textContent = data.total_price.toLocaleString('ko-KR') + '원';
-  document.getElementById('purchased_at').textContent = new Date(data.purchased_at).toLocaleString('ko-KR');
+  document.getElementById('quantity').textContent = data.quantity + 'x';
+  document.getElementById('price_per_unit').textContent = '₩' + data.price_per_unit.toLocaleString();
+  document.getElementById('total_price').textContent = '₩' + data.total_price.toLocaleString();
+
+  const date = new Date(data.purchased_at);
+  const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  const timeStr = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  document.getElementById('purchased_at').textContent = `${dateStr} ${timeStr}`;
 
   const tagEl = document.getElementById('tag');
   tagEl.className = 'tag ' + tag.class;

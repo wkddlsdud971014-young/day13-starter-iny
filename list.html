@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>판매 현황</title>
+<title>Sales</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -21,6 +21,7 @@
     font-weight: 700;
     margin: 0 0 8px 0;
     letter-spacing: -1px;
+    text-transform: uppercase;
   }
   .subtitle { color: #999; font-size: 14px; margin: 0; }
 
@@ -107,16 +108,16 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>판매 현황</h1>
+      <h1>Coffee Sales</h1>
     </div>
 
     <div class="info-bar">
-      <span class="count" id="count">로드 중...</span>
-      <a href="index.html" class="cta">+ 새 주문</a>
+      <span class="count" id="count">Loading...</span>
+      <a href="index.html" class="cta">+ New Order</a>
     </div>
 
     <div class="grid" id="grid"></div>
-    <div class="empty" id="empty" style="display: none;">데이터가 없습니다</div>
+    <div class="empty" id="empty" style="display: none;">No orders yet</div>
   </div>
 
 <script>
@@ -135,7 +136,7 @@ async function load() {
     return;
   }
   const rows = await res.json();
-  document.getElementById('count').textContent = `총 ${rows.length}건`;
+  document.getElementById('count').textContent = `${rows.length} order${rows.length !== 1 ? 's' : ''}`;
 
   if (rows.length === 0) {
     document.getElementById('empty').style.display = 'block';
@@ -145,14 +146,14 @@ async function load() {
   const html = rows.map(r => {
     const tag = PRODUCT_TAGS[r.product] || { class: "tag-americano", label: r.product };
     const date = new Date(r.purchased_at);
-    const time = date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+    const time = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
     return `
       <div class="card" onclick="location.href='detail.html?id=${r.id}'">
         <div class="card-tag ${tag.class}">${tag.label}</div>
         <div class="card-id">#${r.id}</div>
         <div class="card-buyer">${r.buyer_name}</div>
         <div class="card-divider"></div>
-        <div class="card-price">${r.total_price.toLocaleString('ko-KR')}원</div>
+        <div class="card-price">₩${r.total_price.toLocaleString()}</div>
         <div class="card-time">${time}</div>
       </div>
     `;
