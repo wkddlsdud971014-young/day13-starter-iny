@@ -64,7 +64,7 @@
 
   .list-header {
     display: grid;
-    grid-template-columns: 80px 120px 140px 1fr 100px;
+    grid-template-columns: 80px 120px 140px 1fr 60px 100px;
     gap: 20px;
     padding: 20px 24px;
     background: #f9f6f1;
@@ -78,7 +78,7 @@
 
   .list-item {
     display: grid;
-    grid-template-columns: 80px 120px 140px 1fr 100px;
+    grid-template-columns: 80px 120px 140px 1fr 60px 100px;
     gap: 20px;
     padding: 18px 24px;
     align-items: center;
@@ -163,11 +163,11 @@
 
   @media (max-width: 768px) {
     .list-header {
-      grid-template-columns: 60px 1fr 100px;
+      grid-template-columns: 60px 1fr 50px 80px;
       font-size: 10px;
     }
     .list-item {
-      grid-template-columns: 60px 1fr 100px;
+      grid-template-columns: 60px 1fr 50px 80px;
       gap: 12px;
       padding: 14px 16px;
     }
@@ -243,6 +243,7 @@ async function load() {
       <div>Menu</div>
       <div>Customer</div>
       <div>Time</div>
+      <div>Qty</div>
       <div>Total</div>
     </div>
   `;
@@ -262,6 +263,7 @@ async function load() {
           <div style="font-size: 12px; color: #9b8f85;">ID #${r.id}</div>
           <div class="item-time">${time}</div>
         </div>
+        <div style="text-align: center; font-size: 14px; font-weight: 500; color: #2b2520;">${r.quantity}x</div>
         <div class="item-price">₩${r.total_price.toLocaleString()}</div>
       </div>
     `;
