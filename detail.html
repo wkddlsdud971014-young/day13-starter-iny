@@ -7,94 +7,121 @@
 <style>
   * { box-sizing: border-box; }
   body {
-    font-family: "Apple SD Gothic Neo", sans-serif;
-    max-width: 580px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 60px 20px;
+    background: #fafaf8;
     color: #1b1d21;
-    background: #f9f8f6;
   }
-  .header { margin-bottom: 24px; }
-  h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px 0; }
-  .meta { color: #999; font-size: 13px; margin: 0; }
-  .meta a { color: #0d6d64; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-  .meta a:hover { text-decoration: underline; }
+  .container { max-width: 600px; margin: 0 auto; }
 
-  .card {
-    background: white;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  }
-  .info { display: grid; gap: 24px; }
-  .row { display: grid; grid-template-columns: 100px 1fr; gap: 16px; align-items: center; }
-  .label {
+  .back-link {
+    display: inline-block;
+    font-size: 14px;
+    color: #2563eb;
+    text-decoration: none;
+    margin-bottom: 40px;
     font-weight: 600;
-    color: #666;
-    font-size: 13px;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 48px 0;
+    letter-spacing: -1px;
+  }
+
+  .info-section {
+    background: white;
+    border-radius: 8px;
+    padding: 32px;
+    border: 1px solid #f0f0f0;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: #999;
   }
+
   .value {
-    color: #1b1d21;
-    font-size: 16px;
-  }
-  .value.price {
-    text-align: right;
-    font-variant-numeric: tabular-nums;
+    font-size: 18px;
     font-weight: 600;
-    color: #e85d04;
+    color: #1b1d21;
   }
-  .divider { height: 1px; background: #eee; grid-column: 1/-1; margin: 8px 0; }
-  .section { background: #f9f8f6; padding: 16px; border-radius: 8px; }
-  .section .row:last-child .divider { display: none; }
+
+  .value.price {
+    color: #d2691e;
+    font-size: 28px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+  }
+  .tag-americano { background: #d2691e; }
+  .tag-latte { background: #8b6f47; }
+  .tag-matcha { background: #7cb342; }
+  .tag-cocoa { background: #9575cd; }
+  .tag-milk { background: #64b5f6; }
 </style>
 </head>
 <body>
-  <div class="header">
-    <h1 id="title">주문 상세</h1>
-    <p class="meta"><a href="list.html">← 목록으로</a></p>
-  </div>
+  <div class="container">
+    <a href="list.html" class="back-link">← 목록으로</a>
+    <h1 id="title">주문 #<span id="id"></span></h1>
 
-  <div class="card">
-    <div class="info">
-      <div class="row">
-        <div class="label">주문번호</div>
-        <div class="value" id="id"></div>
+    <div class="info-section">
+      <div class="info-row">
+        <div class="label">상품</div>
+        <div>
+          <span class="tag" id="tag"></span>
+          <div class="value" id="product" style="margin-top: 8px;"></div>
+        </div>
       </div>
-      <div class="divider"></div>
 
-      <div class="row">
+      <div class="info-row">
         <div class="label">구매자</div>
         <div class="value" id="buyer_name"></div>
       </div>
-      <div class="divider"></div>
 
-      <div class="row">
-        <div class="label">상품</div>
-        <div class="value" id="product"></div>
-      </div>
-      <div class="divider"></div>
-
-      <div class="row">
+      <div class="info-row">
         <div class="label">수량</div>
         <div class="value" id="quantity"></div>
       </div>
-      <div class="divider"></div>
 
-      <div class="row">
+      <div class="info-row">
         <div class="label">단가</div>
-        <div class="value price" id="price_per_unit"></div>
+        <div class="value" id="price_per_unit"></div>
       </div>
-      <div class="divider"></div>
 
-      <div class="row">
+      <div class="info-row">
         <div class="label">총액</div>
         <div class="value price" id="total_price"></div>
       </div>
-      <div class="divider"></div>
 
-      <div class="row">
+      <div class="info-row">
         <div class="label">구매 시각</div>
         <div class="value" id="purchased_at"></div>
       </div>
@@ -102,6 +129,14 @@
   </div>
 
 <script>
+const PRODUCT_TAGS = {
+  "아메리카노": { class: "tag-americano", label: "Americano" },
+  "카페라떼": { class: "tag-latte", label: "Latte" },
+  "율무차": { class: "tag-matcha", label: "Matcha" },
+  "코코아": { class: "tag-cocoa", label: "Cocoa" },
+  "우유": { class: "tag-milk", label: "Milk" }
+};
+
 async function load() {
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
@@ -118,13 +153,19 @@ async function load() {
   }
 
   const data = await res.json();
+  const tag = PRODUCT_TAGS[data.product] || { class: "tag-americano", label: data.product };
+
   document.getElementById('id').textContent = data.id;
-  document.getElementById('buyer_name').textContent = data.buyer_name;
   document.getElementById('product').textContent = data.product;
-  document.getElementById('quantity').textContent = data.quantity;
+  document.getElementById('buyer_name').textContent = data.buyer_name;
+  document.getElementById('quantity').textContent = data.quantity + '개';
   document.getElementById('price_per_unit').textContent = data.price_per_unit.toLocaleString('ko-KR') + '원';
   document.getElementById('total_price').textContent = data.total_price.toLocaleString('ko-KR') + '원';
   document.getElementById('purchased_at').textContent = new Date(data.purchased_at).toLocaleString('ko-KR');
+
+  const tagEl = document.getElementById('tag');
+  tagEl.className = 'tag ' + tag.class;
+  tagEl.textContent = tag.label;
 }
 load();
 </script>
