@@ -64,7 +64,7 @@
 
   .list-header {
     display: grid;
-    grid-template-columns: 70px 90px 120px 140px 1fr 60px 80px;
+    grid-template-columns: 60px 160px 140px 1fr 60px 80px;
     gap: 16px;
     padding: 20px 24px;
     background: #f9f6f1;
@@ -78,7 +78,7 @@
 
   .list-item {
     display: grid;
-    grid-template-columns: 70px 90px 120px 140px 1fr 60px 80px;
+    grid-template-columns: 60px 160px 140px 1fr 60px 80px;
     gap: 16px;
     padding: 18px 24px;
     align-items: center;
@@ -163,12 +163,12 @@
 
   @media (max-width: 768px) {
     .list-header {
-      grid-template-columns: 50px 50px 80px 1fr 50px 70px;
+      grid-template-columns: 50px 130px 100px 1fr 45px 70px;
       font-size: 9px;
     }
     .list-item {
-      grid-template-columns: 50px 50px 80px 1fr 50px 70px;
-      gap: 10px;
+      grid-template-columns: 50px 130px 100px 1fr 45px 70px;
+      gap: 12px;
       padding: 14px 16px;
     }
     .item-drink {
@@ -239,7 +239,6 @@ async function load() {
 
   let html = `
     <div class="list-header">
-      <div></div>
       <div>ID</div>
       <div>Menu</div>
       <div>Customer</div>
@@ -257,11 +256,16 @@ async function load() {
     const fullDateTime = `${dateStr} ${time}`;
     return `
       <div class="list-item" onclick="location.href='detail.html?id=${r.id}'">
-        <div class="item-drink">${tag.emoji}</div>
         <div style="font-size: 13px; font-weight: 600; color: #2b2520;">
           #${r.id}
         </div>
-        <div class="item-tag ${tag.class}">${tag.label}</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="item-drink" style="margin: 0; font-size: 28px;">${tag.emoji}</div>
+          <div>
+            <div class="item-tag ${tag.class}">${tag.label}</div>
+            <div style="font-size: 13px; font-weight: 500; color: #2b2520; margin-top: 4px;">${r.product}</div>
+          </div>
+        </div>
         <div class="item-customer">${r.buyer_name}</div>
         <div class="item-time">${fullDateTime}</div>
         <div style="text-align: center; font-size: 14px; font-weight: 500; color: #2b2520;">${r.quantity}x</div>
