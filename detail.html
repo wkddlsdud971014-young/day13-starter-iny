@@ -5,43 +5,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문 상세</title>
 <style>
-  body { font-family: "Apple SD Gothic Neo", sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; color: #1b1d21; }
-  h1 { font-size: 24px; margin-bottom: 8px; }
-  .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
-  .info { display: grid; grid-template-columns: 120px 1fr; gap: 16px; }
-  .label { font-weight: 600; color: #666; }
-  .value { color: #1b1d21; }
-  .value.price { text-align: right; font-variant-numeric: tabular-nums; }
-  hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
-  a { color: #0d6d64; text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Apple SD Gothic Neo", sans-serif;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: #1b1d21;
+    background: #f9f8f6;
+  }
+  .header { margin-bottom: 24px; }
+  h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px 0; }
+  .meta { color: #999; font-size: 13px; margin: 0; }
+  .meta a { color: #0d6d64; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+  .meta a:hover { text-decoration: underline; }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .info { display: grid; gap: 24px; }
+  .row { display: grid; grid-template-columns: 100px 1fr; gap: 16px; align-items: center; }
+  .label {
+    font-weight: 600;
+    color: #666;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .value {
+    color: #1b1d21;
+    font-size: 16px;
+  }
+  .value.price {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: #e85d04;
+  }
+  .divider { height: 1px; background: #eee; grid-column: 1/-1; margin: 8px 0; }
+  .section { background: #f9f8f6; padding: 16px; border-radius: 8px; }
+  .section .row:last-child .divider { display: none; }
 </style>
 </head>
 <body>
-  <h1 id="title">주문 상세</h1>
-  <p class="meta"><a href="list.html">← 목록으로</a></p>
+  <div class="header">
+    <h1 id="title">주문 상세</h1>
+    <p class="meta"><a href="list.html">← 목록으로</a></p>
+  </div>
 
-  <div class="info">
-    <div class="label">주문번호</div>
-    <div class="value" id="id"></div>
+  <div class="card">
+    <div class="info">
+      <div class="row">
+        <div class="label">주문번호</div>
+        <div class="value" id="id"></div>
+      </div>
+      <div class="divider"></div>
 
-    <div class="label">구매자</div>
-    <div class="value" id="buyer_name"></div>
+      <div class="row">
+        <div class="label">구매자</div>
+        <div class="value" id="buyer_name"></div>
+      </div>
+      <div class="divider"></div>
 
-    <div class="label">상품</div>
-    <div class="value" id="product"></div>
+      <div class="row">
+        <div class="label">상품</div>
+        <div class="value" id="product"></div>
+      </div>
+      <div class="divider"></div>
 
-    <div class="label">수량</div>
-    <div class="value" id="quantity"></div>
+      <div class="row">
+        <div class="label">수량</div>
+        <div class="value" id="quantity"></div>
+      </div>
+      <div class="divider"></div>
 
-    <div class="label">단가</div>
-    <div class="value price" id="price_per_unit"></div>
+      <div class="row">
+        <div class="label">단가</div>
+        <div class="value price" id="price_per_unit"></div>
+      </div>
+      <div class="divider"></div>
 
-    <div class="label">총액</div>
-    <div class="value price" id="total_price"></div>
+      <div class="row">
+        <div class="label">총액</div>
+        <div class="value price" id="total_price"></div>
+      </div>
+      <div class="divider"></div>
 
-    <div class="label">구매 시각</div>
-    <div class="value" id="purchased_at"></div>
+      <div class="row">
+        <div class="label">구매 시각</div>
+        <div class="value" id="purchased_at"></div>
+      </div>
+    </div>
   </div>
 
 <script>
