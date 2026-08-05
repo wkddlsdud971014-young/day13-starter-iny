@@ -33,7 +33,7 @@ async function load() {
   const rows = await res.json();
   document.getElementById('count').textContent = '총 ' + rows.length + '건';
   document.getElementById('rows').innerHTML = rows.map(r =>
-    `<tr>
+    `<tr onclick="location.href='detail.html?id=${r.id}'" style="cursor: pointer;">
        <td>${r.id}</td>
        <td>${r.buyer_name}</td>
        <td>${r.product}</td>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주문 상세</title>
+<style>
+  body { font-family: "Apple SD Gothic Neo", sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; color: #1b1d21; }
+  h1 { font-size: 24px; margin-bottom: 8px; }
+  .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
+  .info { display: grid; grid-template-columns: 120px 1fr; gap: 16px; }
+  .label { font-weight: 600; color: #666; }
+  .value { color: #1b1d21; }
+  .value.price { text-align: right; font-variant-numeric: tabular-nums; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
+  a { color: #0d6d64; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <h1 id="title">주문 상세</h1>
+  <p class="meta"><a href="list.html">← 목록으로</a></p>
+
+  <div class="info">
+    <div class="label">주문번호</div>
+    <div class="value" id="id"></div>
+
+    <div class="label">구매자</div>
+    <div class="value" id="buyer_name"></div>
+
+    <div class="label">상품</div>
+    <div class="value" id="product"></div>
+
+    <div class="label">수량</div>
+    <div class="value" id="quantity"></div>
+
+    <div class="label">단가</div>
+    <div class="value price" id="price_per_unit"></div>
+
+    <div class="label">총액</div>
+    <div class="value price" id="total_price"></div>
+
+    <div class="label">구매 시각</div>
+    <div class="value" id="purchased_at"></div>
+  </div>
+
+<script>
+async function load() {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+
+  if (!id) {
+    document.getElementById('title').textContent = '주문 번호가 없습니다';
+    return;
+  }
+
+  const res = await fetch('/api/list?id=' + id);
+  if (!res.ok) {
+    document.getElementById('title').textContent = '조회에 실패했습니다';
+    return;
+  }
+
+  const data = await res.json();
+  document.getElementById('id').textContent = data.id;
+  document.getElementById('buyer_name').textContent = data.buyer_name;
+  document.getElementById('product').textContent = data.product;
+  document.getElementById('quantity').textContent = data.quantity;
+  document.getElementById('price_per_unit').textContent = data.price_per_unit.toLocaleString('ko-KR') + '원';
+  document.getElementById('total_price').textContent = data.total_price.toLocaleString('ko-KR') + '원';
+  document.getElementById('purchased_at').textContent = new Date(data.purchased_at).toLocaleString('ko-KR');
+}
+load();
+</script>
+</body>
+</html>
