@@ -1,6 +1,50 @@
 # CLAUDE.md
 <!-- spec_ref: 주차나선 SOT §9 D13 + 한얼 260804 확정(오전=상세 라우트, 오후=규칙판, day13-starter 독립실행) -->
 
+# UI Rules
+
+## Language
+- Use polite Korean for all UI text.
+- Never use informal language.
+- Keep wording clear and consistent.
+
+## Change Scope
+- Modify only the requested parts.
+- Leave everything else unchanged.
+- Never redesign without permission.
+
+## Preserve Data
+- Never remove original data.
+- Never rename existing data.
+- Never reorder data unless requested.
+- Keep all provided information visible.
+
+## Preserve English Design
+- Keep English labels and typography.
+- Do not replace English with Korean.
+- Do not change English for decoration.
+- Preserve readability.
+
+## Mobile First
+- Design for mobile only.
+- Use a single-column layout.
+- Avoid desktop-style layouts.
+- Prioritize one-handed use.
+
+## Mobile Usability
+- Never let buttons cover content.
+- Add bottom padding for floating buttons.
+- Keep touch targets easy to tap.
+- Ensure the last item is fully visible.
+
+## Final Check
+- Requested changes only.
+- Original data preserved.
+- English design preserved.
+- Mobile-friendly layout.
+- No content hidden by UI.
+
+
 이 파일은 Claude Code가 이 프로젝트를 고치기 전에 읽는 규칙이다. Day13 실습 프로젝트(커피 자판기 - 주문 등록 + 판매 현황 조회 + 상세 페이지) 전용이다.
 
 Day12에 판매 데이터를 조회하는 화면까지 만들었다. 오늘(Day13)은 목록의 한 건을 자기 주소를 가진 상세 페이지(detail.html?id=N)로 여는 것과, 반복해서 말하던 지시를 이 규칙 파일에 박아 자동화하는 것을 실습한다.
