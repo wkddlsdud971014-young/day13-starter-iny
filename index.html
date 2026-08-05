@@ -7,75 +7,82 @@
 <style>
   * { box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Georgia', 'Times New Roman', serif;
     color: #2b2520;
-    background: linear-gradient(135deg, #f9f6f1 0%, #f5f0eb 100%);
+    background: #faf9f7;
     min-height: 100vh;
     margin: 0;
-    padding: 40px 20px;
+    padding: 60px 20px;
   }
-  .container { max-width: 480px; margin: 0 auto; }
+  .container { max-width: 520px; margin: 0 auto; }
 
   .header {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     text-align: center;
+    animation: fadeIn 0.6s ease-in;
   }
   h1 {
-    font-size: 32px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
+    font-size: 42px;
+    font-weight: 400;
+    margin: 0 0 12px 0;
+    letter-spacing: 1px;
+    color: #1a1815;
   }
   .subtitle {
-    font-size: 14px;
-    color: #8b7d73;
-    margin: 0 0 4px 0;
+    font-size: 15px;
+    color: #9b8f85;
+    margin: 0 0 8px 0;
+    font-weight: 300;
   }
-  .nav { margin-top: 12px; }
+  .nav { margin-top: 16px; }
   .nav a {
     color: #2563eb;
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
+    transition: opacity 0.3s;
   }
-  .nav a:hover { text-decoration: underline; }
+  .nav a:hover { opacity: 0.7; }
 
   .card {
     background: white;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid #f0ebe6;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #f0ede8;
+    animation: slideUp 0.6s ease-out;
   }
 
-  .form-group { margin-bottom: 24px; }
+  .form-group { margin-bottom: 28px; }
   label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #8b7d73;
+    color: #9b8f85;
   }
 
   input, select {
     width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #e5ddd6;
-    border-radius: 8px;
+    padding: 13px 14px;
+    border: 1px solid #e8e3de;
+    border-radius: 6px;
     font-size: 15px;
-    background: #faf9f7;
+    background: #fbfbf9;
     color: #2b2520;
-    font-family: inherit;
-    transition: all 0.2s ease;
+    font-family: 'Georgia', serif;
+    transition: all 0.3s ease;
+  }
+  input::placeholder {
+    color: #c9bbb1;
   }
   input:focus, select:focus {
     outline: none;
-    border-color: #d2691e;
+    border-color: #d4a574;
     background: white;
-    box-shadow: 0 0 0 3px rgba(210, 105, 30, 0.1);
+    box-shadow: 0 0 0 2px rgba(212, 165, 116, 0.08);
   }
 
   .menu-options {
@@ -83,38 +90,27 @@
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  option {
-    padding: 8px;
-  }
-
-  .quantity-group {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  input[type="number"] {
-    width: 80px;
-  }
 
   button {
     width: 100%;
-    padding: 14px 24px;
-    background: #d2691e;
+    padding: 15px 24px;
+    background: #c9a875;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 24px;
+    letter-spacing: 1px;
+    margin-top: 28px;
+    font-family: 'Georgia', serif;
   }
   button:hover:not(:disabled) {
-    background: #b85a16;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(210, 105, 30, 0.2);
+    background: #b89660;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 168, 117, 0.2);
   }
   button:disabled {
     opacity: 0.6;
@@ -122,39 +118,59 @@
   }
 
   .msg {
-    margin-top: 16px;
-    padding: 12px 14px;
-    border-radius: 8px;
+    margin-top: 18px;
+    padding: 13px 14px;
+    border-radius: 6px;
     font-size: 13px;
     display: none;
+    animation: slideDown 0.3s ease-out;
   }
   .msg.ok {
     display: block;
-    background: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #c8e6c9;
+    background: #e8f1e0;
+    color: #4a7c3d;
+    border: 1px solid #d4e5c9;
   }
   .msg.err {
     display: block;
-    background: #ffebee;
-    color: #c62828;
-    border: 1px solid #ffcdd2;
+    background: #f5e8e6;
+    color: #8b3d2d;
+    border: 1px solid #e8d4d0;
   }
 
-  .divider {
-    height: 1px;
-    background: #e5ddd6;
-    margin: 28px 0;
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>☕ Order</h1>
-      <p class="subtitle">Place your coffee order</p>
+      <h1>Coffee Order</h1>
+      <p class="subtitle">Select your favorite drink</p>
       <div class="nav">
-        <a href="list.html">View Sales</a>
+        <a href="list.html">→ View Sales</a>
       </div>
     </div>
 
@@ -162,27 +178,24 @@
       <form id="order-form">
         <div class="form-group">
           <label for="buyer_name">Customer Name</label>
-          <input id="buyer_name" name="buyer_name" required placeholder="e.g. Jane Doe">
+          <input id="buyer_name" name="buyer_name" required placeholder="e.g. Jane Doe" autocomplete="off">
         </div>
 
         <div class="form-group">
           <label for="product">Menu</label>
           <select id="product" name="product" required>
-            <option value="">Choose a drink...</option>
+            <option value="">Select a drink</option>
             <option value="아메리카노">☕ Americano - ₩3,000</option>
-            <option value="카페라떼">🥛 Latte - ₩4,000</option>
+            <option value="카페라떼">Latte - ₩4,000</option>
             <option value="율무차">🫖 Matcha - ₩3,500</option>
             <option value="코코아">🍫 Cocoa - ₩4,000</option>
-            <option value="우유">🥛 Milk - ₩2,500</option>
+            <option value="우유">Milk - ₩2,500</option>
           </select>
         </div>
 
         <div class="form-group">
           <label for="quantity">Quantity</label>
-          <div class="quantity-group">
-            <input id="quantity" name="quantity" type="number" min="1" value="1" required>
-            <span style="color: #8b7d73; font-size: 14px;">cups</span>
-          </div>
+          <input id="quantity" name="quantity" type="number" min="1" value="1" required>
         </div>
 
         <button id="btn" type="submit">Place Order</button>
@@ -209,7 +222,7 @@ document.getElementById('order-form').addEventListener('submit', async (e) => {
       }),
     });
     if (res.ok) {
-      msg.textContent = '✓ Order placed! View it in Sales.';
+      msg.textContent = '✓ Order placed successfully! Check Sales page.';
       msg.className = 'msg ok';
       e.target.reset();
     } else {
